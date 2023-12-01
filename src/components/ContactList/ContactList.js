@@ -5,10 +5,16 @@ import { useSelector } from 'react-redux';
 
 export const ContactList = ({ onDeleteContact }) => {
   const contacts = useSelector(state => state.account)
-  console.log(contacts)
+  const filterContact = useSelector(state => state.filter.filter)
+ 
+
+const newContact = contacts.filter(contact =>
+  contact.name.toLowerCase().includes(filterContact.toLowerCase())
+);
+ 
   return (
     <List>
-      {contacts.map(contact => (
+      {newContact.map(contact => (
         <ListItem key={contact.id}>
           <ContactCard contact={contact} onDeleteContact={onDeleteContact} />
         </ListItem>
@@ -16,3 +22,5 @@ export const ContactList = ({ onDeleteContact }) => {
     </List>
   );
 };
+
+

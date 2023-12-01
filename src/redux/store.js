@@ -9,3 +9,8 @@ export const store = configureStore({
     filter: filterReducer,
   },
 });
+
+store.subscribe(() =>{
+  const state = store.getState();
+  localStorage.setItem('contacts', JSON.stringify(state.account));
+})
