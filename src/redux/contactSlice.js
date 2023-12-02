@@ -12,16 +12,27 @@ const contactSlice = createSlice({
   initialState: JSON.parse(localStorage.getItem('contacts')) || initialState,
   reducers: {
     addContact(state, action) {
-      state.push(action.payload);
+      const { name, number } = action.payload;
+
+      const isDuplicate = state.some(
+        contact => contact.name === name || contact.number === number
+      );
+
+      if (isDuplicate) {
+        alert('a contact with the same number or name already exists');
+        return state;
+      }
+
+      state.push({ id: `id-${Date.now()}`, name, number });
     },
-    
+
     deleteContact(state, action) {
       const index = state.findIndex(contact => contact.id === action.payload);
       state.splice(index, 1);
     },
-
   },
 });
 
 export const contactReducer = contactSlice.reducer;
-export const { addContact, deleteContact, filterContact } = contactSlice.actions;
+export const { addContact, deleteContact, filterContact } =
+  contactSlice.actions;

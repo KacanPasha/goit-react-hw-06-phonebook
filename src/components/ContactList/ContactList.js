@@ -5,8 +5,10 @@ import { useSelector } from 'react-redux';
 
 export const ContactList = ({ onDeleteContact }) => {
   const contacts = useSelector(state => state.account)
-  const filterContact = useSelector(state => state.filter.filter)
- 
+  const filterContact = useSelector(state => state.filter.filter.toLowerCase().trim())
+
+
+ console.log(filterContact)
 
 const newContact = contacts.filter(contact =>
   contact.name.toLowerCase().includes(filterContact.toLowerCase())
