@@ -12,18 +12,7 @@ const contactSlice = createSlice({
   initialState: JSON.parse(localStorage.getItem('contacts')) || initialState,
   reducers: {
     addContact(state, action) {
-      const { name, number } = action.payload;
-
-      const isDuplicate = state.some(
-        contact => contact.name === name || contact.number === number
-      );
-
-      if (isDuplicate) {
-        alert('a contact with the same number or name already exists');
-        return state;
-      }
-
-      state.push({ id: `id-${Date.now()}`, name, number });
+      state.push(action.payload);
     },
 
     deleteContact(state, action) {
@@ -34,5 +23,5 @@ const contactSlice = createSlice({
 });
 
 export const contactReducer = contactSlice.reducer;
-export const { addContact, deleteContact, filterContact } =
+export const { addContact, deleteContact } =
   contactSlice.actions;

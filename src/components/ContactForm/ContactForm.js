@@ -22,19 +22,21 @@ const phoneSchema = Yup.string().matches(
   'Invalid phone number format (e.g., +380(99) 999-99-99)'
 );
 
-
 export const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts);
-
+  const contacts = useSelector(state => state.account);
   const addContactHandler = (newContact, { resetForm }) => {
     const { name, number } = newContact;
-    const contactExists = contacts && contacts.some(
-      (contact) => contact.name === name || contact.number === number
-    );
+
+    const contactExists =
+      contacts &&
+      contacts.some(
+        contact => contact.name === name || contact.number === number
+      );
 
     if (contactExists) {
-      alert(`${name} or ${number} already exists`);
+      alert('a contact with the same number or name already exists');
+      return;
     } else {
       dispatch(addContact({ ...newContact, id: nanoid() }));
       resetForm();
@@ -50,7 +52,7 @@ export const ContactForm = () => {
       validationSchema={schema}
       onSubmit={addContactHandler}
     >
-      {(formikProps) => (
+      {formikProps => (
         <BlocForm onSubmit={formikProps.handleSubmit}>
           <FieldСontainer>
             <BlockLabel>Name</BlockLabel>
@@ -63,7 +65,7 @@ export const ContactForm = () => {
 
             <Field
               name="number"
-              validate={(value) => {
+              validate={value => {
                 try {
                   phoneSchema.validateSync(value);
                 } catch (error) {

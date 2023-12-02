@@ -4,16 +4,15 @@ import { List, ListItem } from './ContactList.Style';
 import { useSelector } from 'react-redux';
 
 export const ContactList = ({ onDeleteContact }) => {
-  const contacts = useSelector(state => state.account)
-  const filterContact = useSelector(state => state.filter.filter.toLowerCase().trim())
+  const contacts = useSelector(state => state.account);
+  const filterContact = useSelector(state =>
+    state.filter.filter.toLowerCase().trim()
+  );
 
+  const newContact = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filterContact.toLowerCase())
+  );
 
- console.log(filterContact)
-
-const newContact = contacts.filter(contact =>
-  contact.name.toLowerCase().includes(filterContact.toLowerCase())
-);
- 
   return (
     <List>
       {newContact.map(contact => (
@@ -24,5 +23,3 @@ const newContact = contacts.filter(contact =>
     </List>
   );
 };
-
-
